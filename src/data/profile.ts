@@ -67,4 +67,36 @@ export const profile: Profile = {
       },
     },
   ],
+
+  // 「作ってきたもの」の欄。画像もリンクも付けず、名前・説明・技術だけを箇条書きで出す。
+  // 外のサービスの規約やルールに触れるおそれがあるものは載せない（決定 0007）
+  builtWorks: [
+    {
+      name: '音声入力ツール',
+      summary:
+        'ショートカットキーを押して話すと、PCの中で文字にします。AIが言いよどみや誤変換を整えてから、入力欄に入れます。',
+      tech: ['Python', 'PySide6', 'faster-whisper', 'Gemini'],
+    },
+    {
+      name: '音声メモの自動整理',
+      summary: 'スマホで録った音声メモをAIが文字にし、種類ごとに分けて、Obsidianのメモに取り込みます。',
+      tech: ['Python', 'PowerShell', 'Gemini', 'Obsidian'],
+    },
+    {
+      name: 'AIニュースの承認つき自動投稿',
+      summary: 'AIのニュースを集めて要約します。承認画面で確かめたものだけを、Xに投稿します。',
+      tech: ['Python', 'Streamlit', 'SQLite', 'Gemini'],
+    },
+    {
+      name: '案件の新着通知',
+      summary: '案件サイトの新着が自分に合うかをAIが判定し、LINEで知らせます。',
+      tech: ['Python', 'Gemini', 'Beautiful Soup', 'LINE'],
+    },
+    {
+      name: 'ToDoアプリ',
+      summary:
+        '自分のタスクと、人と共有するタスクを分けて管理できます。毎週の買い物リストは、好きな順に並べておけば、買い終えた品を未完了に戻しても順番が崩れません。前に使っていたアプリの不満を直した、自分専用のアプリです。',
+      tech: ['Flutter', 'Dart', 'Riverpod', 'Firebase'],
+    },
+  ],
 }

@@ -11,6 +11,7 @@ export function makeProfile(overrides: Partial<Profile> = {}): Profile {
     currentFocus: [],
     links: {},
     works: [],
+    builtWorks: [],
     ...overrides,
   }
 }

@@ -124,7 +124,8 @@ code {
 
 .profile,
 .link-row,
-.work-card {
+.work-card,
+.built-list {
   border: 1px solid rgb(255 255 255 / 0.9);
   background: var(--surface-glass);
   box-shadow: var(--shadow);
@@ -499,6 +500,45 @@ a.link-row:hover {
   text-decoration: underline;
 }
 
+/* ---- 作ってきたもの（画像なしの箇条書き。1枚のカードの中を線で区切る） ---- */
+
+.built-list {
+  margin: 0;
+  padding: 4px 16px;
+  border-radius: var(--radius);
+  list-style: none;
+}
+
+.built-list > li {
+  position: relative;
+  padding: 14px 0 14px 20px;
+}
+
+.built-list > li + li {
+  border-top: 1px solid var(--border);
+}
+
+.built-list > li::before {
+  content: '';
+  position: absolute;
+  top: 22px; /* 上の余白 14px ＋ 名前の1行目の真ん中 */
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.built-name {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.built-list p {
+  margin-top: 4px;
+}
+
 /* ---- 未設定の案内 ---- */
 
 .unset-notice {
@@ -696,6 +736,10 @@ body::before {
 
 .page > :nth-child(4) {
   animation-delay: 0.3s;
+}
+
+.page > :nth-child(5) {
+  animation-delay: 0.4s;
 }
 
 .qr-dialog[open] .qr-dialog-inner {

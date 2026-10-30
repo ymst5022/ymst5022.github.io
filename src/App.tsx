@@ -1,5 +1,6 @@
 import { QrCode } from 'lucide-react'
 import { useCallback, useState } from 'react'
+import { BuiltWorksList } from './components/BuiltWorksList.tsx'
 import { ConnectLinks } from './components/ConnectLinks.tsx'
 import { ProfileHeader } from './components/ProfileHeader.tsx'
 import { QrDialog } from './components/QrDialog.tsx'
@@ -10,7 +11,7 @@ import { profile } from './data/profile.ts'
 import { copyText } from './lib/copy.ts'
 import { useNotice } from './lib/useNotice.ts'
 
-/** 1ページだけの名刺。上から プロフィール → つながる → 制作物 → 保存・共有（設計 D7、決定 0004） */
+/** 1ページだけの名刺。上から プロフィール → つながる → 取り組み → 作ってきたもの → 保存・共有（設計 D7、決定 0004） */
 export default function App() {
   const [qrOpen, setQrOpen] = useState(false)
   const { notice, notify, clear } = useNotice()
@@ -37,6 +38,7 @@ export default function App() {
         <ProfileHeader profile={profile} />
         <ConnectLinks links={profile.links} onCopy={handleCopy} />
         <WorksList works={profile.works} />
+        <BuiltWorksList works={profile.builtWorks} />
         <ShareActions profile={profile} onCopy={handleCopy} />
       </main>
 

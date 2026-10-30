@@ -21,6 +21,7 @@ IT系の勉強会や交流イベントで使う、デジタル名刺のサイト
 | Discord を載せる | `links` の `discord:` の行。`userId`（数字のID）を書くと、プロフィールへのリンクも出る |
 | 取り組みを足す | `works` に `{ name, status, summary, tech, repoUrl, url, image }` を1つ足す。非公開のものは `repoUrl`・`url` を書かない |
 | 取り組みに画面の画像を付ける | 画像を `public/works/` に置き、`image: { src: '/works/xxx.webp', alt, width, height, credit }` を書く。1枚 200KB 以下にし、鍵・合言葉・メール・アカウント名・他人の投稿など、載せたくない情報が写っていないことを確かめる |
+| 作ってきたものを足す | `builtWorks` に `{ name, summary, tech }` を1つ足す。画像とリンクは付けない（箇条書きで出る） |
 | アバターを画像にする | 画像を `public/avatar.png` に置き、`avatarImage: '/avatar.png'` を足す（写真は位置情報などを消してから） |
 | アクセント色を変える | `src/index.css` の一番上の `--accent` |
 
@@ -36,7 +37,7 @@ IT系の勉強会や交流イベントで使う、デジタル名刺のサイト
 |---|---|
 | `npm run lint` | コードの書き方の検査（oxlint） |
 | `npm run typecheck` | 型の検査 |
-| `npm test` | 自動テスト（vCard・リンク・QR・コピー・取り組みのカード） |
+| `npm test` | 自動テスト（vCard・リンク・QR・コピー・取り組みのカード・作ってきたもの） |
 | `npm run build` | 公開用のファイルを `dist/` に作る（型の検査を含む） |
 | `npm run check:publish` | `profile.ts` に `TODO` が残っていないか、画像が `public/` にあって 200KB 以下かの検査 |
 

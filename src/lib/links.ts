@@ -57,8 +57,8 @@ export function discordInfo(links: Links): DiscordInfo | null {
   return info
 }
 
-/** 名前の入っている制作物だけ */
-export function visibleWorks(works: Work[]): Work[] {
+/** 名前の入っている制作物だけ（「取り組み」と「作ってきたもの」の両方で使う） */
+export function visibleWorks<T extends Pick<Work, 'name'>>(works: T[]): T[] {
   return works.filter((work) => hasText(work.name))
 }
 

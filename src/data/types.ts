@@ -19,6 +19,8 @@ export interface Profile {
   currentFocus: string[]
   links: Links
   works: Work[]
+  /** これまでに作ったもの。画像もリンクも付けず、名前・説明・技術だけを箇条書きで出す */
+  builtWorks: BuiltWork[]
 }
 
 export interface Links {
@@ -56,6 +58,9 @@ export interface Work {
   /** 画面の画像。非公開のものは、秘密や個人の情報が写っていない画像だけを載せる（決定 0006） */
   image?: WorkImage
 }
+
+/** 「作ってきたもの」の1項目。名称・概要・使用技術だけ */
+export type BuiltWork = Pick<Work, 'name' | 'summary' | 'tech'>
 
 export interface WorkImage {
   /** public/ に置いた画像のパス（例: "/works/xxx.webp"）。1枚 200KB 以下にする */
