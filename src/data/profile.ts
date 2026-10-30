@@ -74,12 +74,12 @@ export const profile: Profile = {
     {
       name: '音声入力ツール',
       summary:
-        'ショートカットキーを押して話すと、PCの中で文字にします。AIが言いよどみや誤変換を整えてから、入力欄に入れます。',
+        'ショートカットキーを押して話すと、PCの中で文字にし、AIが言いよどみや誤変換を整えてから入力欄に入れます。Aqua Voiceから着想を得て自作しました。2026年8月に比べた実験では成功率も失敗率もほぼ変わらなかったため、今はこちらを使っています。',
       tech: ['Python', 'PySide6', 'faster-whisper', 'Gemini'],
     },
     {
       name: '音声メモの自動整理',
-      summary: 'スマホで録った音声メモをAIが文字にし、種類ごとに分けて、Obsidianのメモに取り込みます。',
+      summary: 'スマートフォンで録った音声メモをAIが文字にし、種類ごとに分けて、Obsidianのメモに取り込みます。',
       tech: ['Python', 'PowerShell', 'Gemini', 'Obsidian'],
     },
     {
@@ -88,12 +88,12 @@ export const profile: Profile = {
       tech: ['Python', 'Streamlit', 'SQLite', 'Gemini'],
     },
     {
-      name: '案件の新着通知',
-      summary: '案件サイトの新着が自分に合うかをAIが判定し、LINEで知らせます。',
+      name: 'クラウドソーシングの新着通知',
+      summary: 'CrowdWorksなどのクラウドソーシングサイトの新着の仕事が自分に合うかをAIが判定し、LINEで知らせます。',
       tech: ['Python', 'Gemini', 'Beautiful Soup', 'LINE'],
     },
     {
-      name: 'ToDoアプリ',
+      name: 'ToDoアプリ（Android）',
       summary:
         '自分のタスクと、人と共有するタスクを分けて管理できます。毎週の買い物リストは、好きな順に並べておけば、買い終えた品を未完了に戻しても順番が崩れません。前に使っていたアプリの不満を直した、自分専用のアプリです。',
       tech: ['Flutter', 'Dart', 'Riverpod', 'Firebase'],
