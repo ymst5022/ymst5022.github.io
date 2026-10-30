@@ -1,0 +1,751 @@
+/* 見た目はこの1ファイルで管理する（設計 D12）。色を変えるときは :root の変数だけを直す */
+
+:root {
+  --accent: #5eead4; /* アクセント色はここだけ（ファビコン public/favicon.svg も同じ色）。濃淡は下で作る */
+  --accent-strong: color-mix(in srgb, var(--accent) 45%, black); /* 明るい背景の上の文字・線 */
+  --accent-deep: color-mix(in srgb, var(--accent) 80%, black); /* ボタンのグラデーションの終わり */
+  --accent-text: color-mix(in srgb, var(--accent) 15%, black); /* アクセント色の上に置く文字 */
+  --accent-soft: color-mix(in srgb, var(--accent) 22%, white);
+  --accent-glow: color-mix(in srgb, var(--accent) 50%, transparent);
+
+  --bg: #f4f7f7;
+  --surface: #ffffff;
+  --surface-glass: rgb(255 255 255 / 0.72);
+  --border: rgb(15 23 42 / 0.1);
+  --border-strong: rgb(15 23 42 / 0.18);
+  --text: #18181b;
+  --text-muted: #52525b;
+  --danger: #dc2626;
+  --shadow: 0 12px 32px -16px rgb(15 40 40 / 0.28);
+  --shadow-lift: 0 18px 40px -16px rgb(15 40 40 / 0.38);
+
+  --radius: 16px;
+  --gutter: 16px;
+  --content-width: 640px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI',
+    Meiryo, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+/* 背景: アクセント色の淡い光（下の「動き」でゆっくり揺れる） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -15%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 35% at 15% 10%, var(--accent-glow), transparent 70%),
+    radial-gradient(40% 30% at 95% 30%, color-mix(in srgb, var(--accent) 32%, transparent), transparent 70%),
+    radial-gradient(55% 35% at 45% 100%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 70%);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent-strong);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- 全体の枠: スマホは画面いっぱい、タブレット・PC は 640px の1列を中央に ---- */
+
+.topbar,
+.page {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+}
+
+.page {
+  padding-top: 12px;
+  padding-bottom: 112px; /* 画面下の通知と重ならないように */
+}
+
+@media (min-width: 600px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+
+/* ---- 半透明のカード（プロフィール・リンク・制作物） ---- */
+
+.profile,
+.link-row,
+.work-card {
+  border: 1px solid rgb(255 255 255 / 0.9);
+  background: var(--surface-glass);
+  box-shadow: var(--shadow);
+}
+
+/* ---- ボタン ---- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--accent-strong);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button-primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  box-shadow: 0 12px 28px -12px var(--accent-deep);
+  color: var(--accent-text);
+}
+
+.button-primary:hover:not(:disabled) {
+  border-color: transparent;
+}
+
+.button-small {
+  min-height: 44px;
+  padding: 0 14px;
+}
+
+.topbar .button {
+  background: var(--surface-glass);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button-row .button {
+  flex: 1 1 180px;
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  border-color: var(--accent-strong);
+}
+
+/* ---- プロフィール ---- */
+
+.profile {
+  padding: 24px 20px;
+  border-radius: 24px;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 88px;
+  height: 88px;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, var(--accent), var(--accent-strong)) border-box;
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent),
+    0 12px 28px -10px var(--accent-deep);
+  color: var(--accent-strong);
+  font-size: 2.1rem;
+  font-weight: 800;
+  object-fit: cover;
+}
+
+.profile-name-block {
+  min-width: 0;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+.profile-title {
+  margin-top: 4px;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.bio {
+  margin-top: 20px;
+  white-space: pre-line;
+}
+
+.bio + .bio {
+  margin-top: 12px;
+}
+
+.block {
+  margin-top: 24px;
+}
+
+.block-title {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 4px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.tags-small {
+  margin-top: 10px;
+}
+
+.focus-list {
+  margin: 8px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.focus-list li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.focus-list li + li {
+  margin-top: 4px;
+}
+
+.focus-list li::before {
+  content: '';
+  position: absolute;
+  top: 0.72em;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ---- 各セクション ---- */
+
+.section {
+  margin-top: 40px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 1.125rem;
+}
+
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 1.1em;
+  border-radius: 2px;
+  background: linear-gradient(var(--accent), var(--accent-strong));
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), transparent);
+}
+
+/* ---- つながる ---- */
+
+.link-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+}
+
+a.link-row:hover {
+  border-color: var(--accent);
+}
+
+.link-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.link-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+.link-label {
+  font-weight: 600;
+}
+
+.link-display {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.link-arrow {
+  flex: none;
+  color: var(--text-muted);
+}
+
+/* ---- 制作物 ---- */
+
+.works {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-card {
+  padding: 16px;
+  border-radius: var(--radius);
+}
+
+.work-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.work-card p {
+  margin-top: 6px;
+}
+
+.work-figure {
+  margin: 0 0 14px;
+}
+
+/* 縦長のスマホ画面も横長の動画も、枠の中に収める（余白は薄いアクセント色） */
+.work-image-link {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--accent-soft);
+}
+
+.work-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.work-credit {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.work-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.work-status {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.work-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: 8px;
+}
+
+.work-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.work-links a:hover {
+  text-decoration: underline;
+}
+
+/* ---- 未設定の案内 ---- */
+
+.unset-notice {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+}
+
+/* ---- 全画面の QR ---- */
+
+.qr-dialog {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background:
+    radial-gradient(60% 40% at 50% 0%, var(--accent-glow), transparent 70%),
+    var(--bg);
+  color: var(--text);
+}
+
+.qr-dialog::backdrop {
+  background: var(--bg);
+}
+
+.qr-dialog-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 560px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 12px var(--gutter) 112px;
+}
+
+.qr-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.qr-dialog-head h2 {
+  font-size: 1.125rem;
+}
+
+.qr-frame {
+  display: grid;
+  place-items: center;
+  width: min(100%, 70vh, 480px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #ffffff; /* QR は白地に黒で読み取りやすく */
+  box-shadow: var(--shadow);
+  color: #3f3f46;
+}
+
+.qr-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.qr-url {
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.qr-dialog .button-row {
+  width: 100%;
+}
+
+/* ---- 画面下の通知（明るい画面の上で目立つよう、濃い色にする） ---- */
+
+.toast-region {
+  position: fixed;
+  right: 0;
+  bottom: 16px;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--gutter);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: min(100%, 480px);
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: #18181b;
+  color: #fafafa;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.3);
+  pointer-events: auto;
+}
+
+.toast-error {
+  border-left: 4px solid var(--danger);
+}
+
+.toast-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast-message {
+  font-weight: 600;
+}
+
+.toast-detail {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.875rem;
+}
+
+.toast-detail input {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 6px 8px;
+  border: 1px solid #d4d4d8;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #18181b;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.toast-close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -10px -10px -10px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ---- 動き: 表示時に浮き上がる・背景の光が揺れる・触ると浮く・QR と通知がふわっと出る ---- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 3%, 0) scale(1.1);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+body::before {
+  animation: drift 24s ease-in-out infinite alternate;
+}
+
+.topbar,
+.page > * {
+  animation: rise 0.6s var(--ease) both;
+}
+
+.page > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.page > :nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.page > :nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.qr-dialog[open] .qr-dialog-inner {
+  animation: pop 0.3s var(--ease) both;
+}
+
+.toast {
+  animation: rise 0.3s var(--ease) both;
+}
+
+.button,
+.icon-button,
+.link-row,
+.link-arrow,
+.work-image {
+  transition:
+    transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+
+/* マウスを乗せたときだけ浮かせる（スマホでは触った後に浮いたまま残らないように） */
+@media (hover: hover) {
+  .button:hover:not(:disabled),
+  a.link-row:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  a.link-row:hover .link-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  .work-image-link:hover .work-image {
+    transform: scale(1.03);
+  }
+}
+
+.button:active:not(:disabled),
+.icon-button:active,
+a.link-row:active {
+  transform: scale(0.98);
+}
+
+/* 端末で「動きを減らす」設定をしている人には、動きを止める */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
